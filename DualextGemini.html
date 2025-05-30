@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DualExt - Plataforma de Prácticas FP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4dabf7;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem; /* Reducido para más opciones */
+        }
+
+        .nav-menu a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .nav-menu a:hover {
+            color: #4dabf7;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4dabf7;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-menu .dropdown {
+            position: relative;
+        }
+
+        .nav-menu .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(26, 26, 46, 0.98);
+            min-width: 220px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0 0 8px 8px;
+            border-top: 1px solid #4dabf7;
+        }
+
+        .nav-menu .dropdown-content a {
+            color: #e0e0e0;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .nav-menu .dropdown-content a:hover {
+            background-color: rgba(77, 171, 247, 0.1);
+            color: #4dabf7;
+        }
+         .nav-menu .dropdown-content a::after { /* Asegurar que la línea no aparezca en el desplegable */
+            display: none;
+        }
+
+        .nav-menu .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #e0e0e0;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px; /* Ajustado para navbar más alta */
+            padding: 2rem 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            margin-bottom: 2rem;
+        }
+
+        .section.active {
+            display: block;
+        }
+        .subsection {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            margin-top: 2rem;
+        }
+        .subsection.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #4dabf7;
+        }
+        p.section-description {
+            text-align: center; margin-bottom: 2rem; opacity: 0.9;
+        }
+
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(77, 171, 247, 0.1) 0%, rgba(15, 52, 96, 0.1) 100%);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #4dabf7, #74c0fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4dabf7, #339af0);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(77, 171, 247, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #4dabf7;
+            border: 2px solid #4dabf7;
+        }
+
+        .btn-secondary:hover {
+            background: #4dabf7;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            color: #4dabf7;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-align: left;
+        }
+         .card p {
+            font-size: 0.95rem;
+        }
+
+        /* Forms */
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4dabf7;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4dabf7;
+            box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(77, 171, 247, 0.2);
+            color: #4dabf7;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, rgba(77, 171, 247, 0.1), rgba(15, 52, 96, 0.1));
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .newsletter h3 {
+            color: #4dabf7;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .newsletter-form input[type="email"] {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+        }
+         .newsletter-form input[type="email"]:focus {
+            outline: none;
+            border-color: #4dabf7;
+            box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2);
+        }
+
+        .unsubscribe-link {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .unsubscribe-link a {
+            color: #4dabf7;
+            text-decoration: none;
+        }
+         .unsubscribe-link a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Footer */
+        .footer {
+            background: rgba(26, 26, 46, 0.8);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .footer p {
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) { /* Ajuste para dropdowns */
+            .nav-menu {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px; /* Altura de la navbar */
+                flex-direction: column;
+                background: rgba(26, 26, 46, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+                backdrop-filter: blur(10px);
+                gap: 0;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-menu li {
+                width: 100%;
+            }
+            .nav-menu a {
+                 display: block;
+                 padding: 1rem;
+                 border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-menu a:hover::after { /* Quitar línea en móvil */
+                width: 0;
+            }
+             .nav-menu .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border-top: none;
+                background-color: transparent;
+            }
+            .nav-menu .dropdown:hover .dropdown-content {
+                display: none; /* gestionado por JS o dejar que se expanda */
+            }
+            .nav-menu .dropdown-content a {
+                padding-left: 2rem; /* Indentación para submenús */
+            }
+
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+             .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-form input {
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            .hero {
+                padding: 2rem 1rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .form-container {
+                padding: 1.5rem;
+            }
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Estilos para iframe placeholder */
+        .google-embed-placeholder {
+            width: 100%;
+            height: 500px;
+            border: 2px dashed #4dabf7;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(77, 171, 247, 0.05);
+            color: #4dabf7;
+            text-align: center;
+            padding: 20px;
+            margin-top: 2rem;
+        }
+        .google-embed-placeholder p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo" onclick="showSection('inicio', this)">DualExt</a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#" onclick="showSection('inicio', this)">Inicio</a></li>
+                    <li class="dropdown">
+                        <a href="#" onclick="showSection('empresas', this)">Empresas</a>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="showSection('empresas-publicar-oferta', this)">Publicar Oferta</a>
+                            <a href="#" onclick="showSection('empresas-ver-estudiantes', this)">Ver Estudiantes Disponibles</a>
+                            <a href="#" onclick="showSection('empresas-suscribirse', this)">Suscribirse a Novedades</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" onclick="showSection('centros', this)">Centros Educativos</a>
+                        <div class="dropdown-content">
+                             <a href="#" onclick="showSection('centros-publicar-estudiantes', this)">Publicar Estudiantes Disponibles</a>
+                             <a href="#" onclick="showSection('centros-ver-ofertas', this)">Ver Ofertas Actuales</a>
+                        </div>
+                    </li>
+                    <li><a href="#" onclick="showSection('como-funciona', this)">Cómo Funciona</a></li>
+                    <li><a href="#" onclick="showSection('canal-dudas', this)">Canal de Dudas</a></li>
+                </ul>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <section id="inicio" class="section active">
+                <div class="hero">
+                    <h1>Bienvenido a DualExt</h1>
+                    <p>Facilitamos el intercambio de información entre empresas que ofrecen prácticas de FP (FEOE) y centros educativos con estudiantes disponibles.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn btn-primary" onclick="showSection('empresas-publicar-oferta')">🏢 Soy una Empresa</a>
+                        <a href="#" class="btn btn-secondary" onclick="showSection('centros-publicar-estudiantes')">🎓 Soy un Centro Educativo</a>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>✅ Objetivo Principal</h3>
+                        <p>Crear un punto de encuentro donde las empresas puedan buscar perfiles profesionales y contactar con los centros educativos de manera eficiente.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🔍 Para Empresas</h3>
+                        <p>Publique sus necesidades de perfiles y facilite la comunicación con los prospectores de los centros educativos.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎯 Para Centros Educativos</h3>
+                        <p>Acceda a ofertas de prácticas y publique la disponibilidad de sus estudiantes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="empresas" class="section">
+                <h2>Empresas</h2>
+                 <p class="section-description">Herramientas y recursos para empresas que buscan estudiantes de FP para prácticas.</p>
+                 <div class="cards-grid">
+                    <div class="card">
+                        <h3>📝 Publicar Oferta</h3>
+                        <p>Rellene el formulario para que su oferta llegue a los centros educativos.</p>
+                        <a href="#" class="btn btn-primary" onclick="showSection('empresas-publicar-oferta')" style="margin-top: 1rem;">Ir a Publicar Oferta</a>
+                    </div>
+                    <div class="card">
+                        <h3>👥 Ver Estudiantes Disponibles</h3>
+                        <p>Consulte los perfiles de estudiantes disponibles publicados por los centros.</p>
+                        <a href="#" class="btn btn-secondary" onclick="showSection('empresas-ver-estudiantes')" style="margin-top: 1rem;">Ir a Ver Estudiantes</a>
+                    </div>
+                    <div class="card">
+                        <h3>📧 Suscribirse a Novedades</h3>
+                        <p>Reciba notificaciones sobre nuevos perfiles de estudiantes y noticias relevantes.</p>
+                        <a href="#" class="btn btn-secondary" onclick="showSection('empresas-suscribirse')" style="margin-top: 1rem;">Ir a Suscripciones</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="empresas-publicar-oferta" class="section">
+                <h2>Empresas: Publicar Oferta</h2>
+                <p class="section-description">Rellene este formulario para que su oferta de prácticas (FEOE) llegue a los centros educativos.</p>
+                <div class="form-container">
+                    <form id="empresa-oferta-form">
+                        <div class="form-group">
+                            <label for="empresa-nombre">Nombre de la empresa *</label>
+                            <input type="text" id="empresa-nombre" name="empresa-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa-email">Correo electrónico de contacto *</label>
+                            <input type="email" id="empresa-email" name="empresa-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa-familia-profesional">Familia profesional que necesita *</label>
+                            <select id="empresa-familia-profesional" name="empresa-familia-profesional" required>
+                                <option value="">Seleccione una familia profesional</option>
+                                <option value="actividades-fisicas">Actividades Físicas y Deportivas</option>
+                                <option value="administracion">Administración y Gestión</option>
+                                <option value="agraria">Agraria</option>
+                                <option value="artes-graficas">Artes Gráficas</option>
+                                <option value="comercio-marketing">Comercio y Marketing</option>
+                                <option value="edificacion">Edificación y Obra Civil</option>
+                                <option value="electricidad">Electricidad y Electrónica</option>
+                                <option value="energia-agua">Energía y Agua</option>
+                                <option value="fabricacion-mecanica">Fabricación Mecánica</option>
+                                <option value="hosteleria-turismo">Hostelería y Turismo</option>
+                                <option value="imagen-personal">Imagen Personal</option>
+                                <option value="imagen-sonido">Imagen y Sonido</option>
+                                <option value="industrias-alimentarias">Industrias Alimentarias</option>
+                                <option value="industrias-extractivas">Industrias Extractivas</option>
+                                <option value="informatica-comunicaciones">Informática y Comunicaciones</option>
+                                <option value="instalacion-mantenimiento">Instalación y Mantenimiento</option>
+                                <option value="madera-mueble">Madera, mueble y Corcho</option>
+                                <option value="quimica">Química</option>
+                                <option value="sanidad">Sanidad</option>
+                                <option value="seguridad-medio-ambiente">Seguridad y Medio Ambiente</option>
+                                <option value="servicios-socioculturales">Servicios Socioculturales y a la Comunidad</option>
+                                <option value="textil-confeccion">Textil, confección y Piel</option>
+                                <option value="transporte-vehiculos">Transporte y Mantenimiento de Vehículos</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa-sector">Sector de la empresa</label>
+                            <input type="text" id="empresa-sector" name="empresa-sector">
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa-requisitos-alumnos">Requisitos de los alumnos</label>
+                            <textarea id="empresa-requisitos-alumnos" name="empresa-requisitos-alumnos" placeholder="Describa los conocimientos, habilidades o actitudes deseables..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa-comarca">Comarca donde se realizará la actividad formativa *</label>
+                            <select id="empresa-comarca" name="empresa-comarca" required>
+                                 <option value="">Seleccione una comarca</option>
+                                 <option value="brozas">Brozas</option>
+                                 <option value="campina-sur">Campiña Sur (Llerena)</option>
+                                 <option value="caceres">Cáceres</option>
+                                 <option value="coria">Coria</option>
+                                 <option value="hervas">Hervás</option>
+                                 <option value="jaraiz">Jaraiz de la Vera</option>
+                                 <option value="la-serena">La Serena (vinculada con las Vegas Altas del Guadiana)</option>
+                                 <option value="la-siberia">La Siberia (Vegas del Guadiana -Altas-)</option>
+                                 <option value="lacara">Lácara (Vegas del Guadiana -Bajas-)</option>
+                                 <option value="logrosan">Logrosán</option>
+                                 <option value="los-baldios">Los Baldíos o Alburquerque</option>
+                                 <option value="olivenza">Olivenza</option>
+                                 <option value="plasencia">Plasencia</option>
+                                 <option value="sierra-grande">Sierra Grande - Tierra de Barros</option>
+                                 <option value="sierra-suroeste">Sierra Suroeste</option>
+                                 <option value="tentudia">Tentudía</option>
+                                 <option value="tierra-badajoz">Tierra de Badajoz</option>
+                                 <option value="tierra-merida">Tierra de Mérida</option>
+                                 <option value="trujillo">Trujillo</option>
+                                 <option value="valencia-alcantara">Valencia de Alcántara</option>
+                                 <option value="vegas-altas">Vegas Altas del Guadiana</option>
+                                 <option value="zafra">Zafra</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa-num-alumnos">Número de alumnos que necesita *</label>
+                            <input type="number" id="empresa-num-alumnos" name="empresa-num-alumnos" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa-descripcion-formacion">Descripción de la formación/tareas a realizar</label>
+                            <textarea id="empresa-descripcion-formacion" name="empresa-descripcion-formacion" placeholder="Describa brevemente las tareas que realizarán los estudiantes, qué aprenderán..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Enviar Oferta</button>
+                    </form>
+                    </div>
+            </section>
+
+            <section id="empresas-ver-estudiantes" class="section">
+                <h2>Empresas: Ver Estudiantes Disponibles</h2>
+                <p class="section-description">Aquí podrá consultar la lista de estudiantes disponibles publicados por los centros educativos.</p>
+                 <div class="table-container">
+                    <div class="google-embed-placeholder">
+                        <h3>Aquí iría la tabla de Google Sheets/Data Studio con Estudiantes Disponibles</h3>
+                         <p>Este es un marcador de posición. Se mostrarían campos como: Especialidad, Localidad, Centro Educativo, Fecha de disponibilidad, etc., con opciones de filtrado.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="empresas-suscribirse" class="section">
+                <h2>Empresas: Suscribirse a Novedades</h2>
+                <div class="newsletter">
+                    <h3>Manténgase Informado</h3>
+                    <p>Suscríbase para recibir notificaciones sobre nuevos grupos de estudiantes disponibles, eventos y noticias de interés para empresas colaboradoras.</p>
+                    <form id="empresa-suscripcion-form" class="newsletter-form">
+                        <input type="email" id="empresa-suscripcion-email" name="email" placeholder="Su correo electrónico" required>
+                        <button type="submit" class="btn btn-primary">Suscribirse</button>
+                    </form>
+                    <p class="unsubscribe-link">Podrá cancelar su suscripción en cualquier momento desde el pie de página de nuestros correos.</p>
+                </div>
+            </section>
+
+
+            <section id="centros" class="section">
+                 <h2>Centros Educativos</h2>
+                 <p class="section-description">Herramientas y recursos para centros educativos que buscan prácticas para sus estudiantes.</p>
+                 <div class="cards-grid">
+                    <div class="card">
+                        <h3>🎓 Publicar Estudiantes Disponibles</h3>
+                        <p>Informe a las empresas sobre los estudiantes de su centro que están listos para prácticas.</p>
+                        <a href="#" class="btn btn-primary" onclick="showSection('centros-publicar-estudiantes')" style="margin-top: 1rem;">Ir a Publicar Estudiantes</a>
+                    </div>
+                    <div class="card">
+                        <h3>📄 Ver Ofertas Actuales</h3>
+                        <p>Consulte las ofertas de prácticas publicadas por las empresas para sus alumnos.</p>
+                        <a href="#" class="btn btn-secondary" onclick="showSection('centros-ver-ofertas')" style="margin-top: 1rem;">Ir a Ver Ofertas</a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="centros-publicar-estudiantes" class="section">
+                <h2>Centros: Publicar Estudiantes Disponibles</h2>
+                <p class="section-description">Rellene este formulario para registrar los grupos de estudiantes disponibles para prácticas.</p>
+                 <div class="form-container">
+                    <form id="centro-estudiantes-form">
+                        <div class="form-group">
+                            <label for="centro-localidad">Localidad del centro *</label>
+                            <input type="text" id="centro-localidad" name="centro-localidad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-nombre">Nombre del Centro Educativo *</label>
+                            <input type="text" id="centro-nombre" name="centro-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-familia-profesional">Familia profesional de los estudiantes *</label>
+                            <select id="centro-familia-profesional" name="centro-familia-profesional" required>
+                                <option value="">Seleccione una familia profesional</option>
+                                <option value="actividades-fisicas">Actividades Físicas y Deportivas</option>
+                                <option value="administracion">Administración y Gestión</option>
+                                <option value="agraria">Agraria</option>
+                                 <option value="informatica-comunicaciones">Informática y Comunicaciones</option>
+                                <option value="transporte-vehiculos">Transporte y Mantenimiento de Vehículos</option>
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="centro-num-estudiantes">Número de estudiantes disponibles *</label>
+                            <input type="number" id="centro-num-estudiantes" name="centro-num-estudiantes" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-fecha-disponibilidad">Fecha de disponibilidad</label>
+                            <input type="date" id="centro-fecha-disponibilidad" name="centro-fecha-disponibilidad">
+                        </div>
+                        <div class="form-group">
+                            <label for="centro-contacto">Contacto de referencia (prospector/tutor) *</label>
+                            <input type="text" id="centro-contacto" name="centro-contacto" placeholder="Nombre y email o teléfono" required>
+                        </div>
+                         <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Publicar Estudiantes</button>
+                    </form>
+                     </div>
+            </section>
+
+            <section id="centros-ver-ofertas" class="section">
+                <h2>Centros: Ver Ofertas de Prácticas Actuales</h2>
+                <p class="section-description">Explore las ofertas de prácticas publicadas por las empresas.</p>
+                <div class="table-container">
+                     <div class="google-embed-placeholder">
+                        <h3>Aquí iría la tabla de Google Sheets/Data Studio con Ofertas de Empresas</h3>
+                        <p>Este es un marcador de posición. Se mostrarían campos como: Empresa, Familia Profesional, Localidad, Requisitos, Contacto, etc., con opciones de filtrado y descarga.</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="como-funciona" class="section">
+                <h2>¿Cómo Funciona DualExt?</h2>
+                <p class="section-description">DualExt simplifica la conexión entre empresas y centros educativos para la Formación en Empresa y Orientación Profesional (FEOE).</p>
+                
+                <div class="cards-grid" style="grid-template-columns: 1fr 1fr; gap: 3rem;">
+                     <div class="card" style="background: rgba(77, 171, 247, 0.08);">
+                        <h3 style="color: #74c0fc;">🏢 Para Empresas:</h3>
+                        <ol style="list-style-position: inside; padding-left: 10px;">
+                            <li style="margin-bottom: 0.8rem;"><strong>Rellene el formulario de oferta:</strong> Detalle qué perfiles necesita y las condiciones de las prácticas.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>La oferta se comparte:</strong> Su necesidad se envía a todos los centros educativos registrados y se publica en la web.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Consulte estudiantes disponibles:</strong> Explore los perfiles de alumnos que los centros han publicado.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Contacte directamente:</strong> Si un perfil le interesa, contacte con el centro educativo de referencia.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Suscríbase:</strong> Reciba avisos cuando haya nuevos estudiantes disponibles en las familias profesionales de su interés.</li>
+                        </ol>
+                    </div>
+                     <div class="card" style="background: rgba(15, 52, 96, 0.15);">
+                        <h3 style="color: #74c0fc;">🎓 Para Centros Educativos:</h3>
+                         <ol style="list-style-position: inside; padding-left: 10px;">
+                            <li style="margin-bottom: 0.8rem;"><strong>Rellene el formulario con sus estudiantes:</strong> Indique cuántos alumnos tiene disponibles, de qué familias profesionales y cuándo.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Los perfiles se publican:</strong> Las empresas pueden ver la disponibilidad de sus estudiantes.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Consulte ofertas de empresas:</strong> Vea qué empresas están buscando alumnos como los suyos.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Reciba avisos:</strong> Le notificaremos al instante de nuevas ofertas que coincidan con sus perfiles.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Contacto directo:</strong> Las empresas interesadas contactarán con la persona de referencia que haya indicado.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 3rem;">Flujo General del Proceso</h3>
+                <div class="form-container" style="max-width: 900px;">
+                    <div style="display: grid; gap: 1.5rem; margin-top: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 4px solid #4dabf7;">
+                            <div style="background: #4dabf7; color: white; min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                            <div>
+                                <h4>Registro de Ofertas/Demandas</h4>
+                                <p style="font-size:0.9rem; opacity:0.8;">Las empresas publican ofertas y los centros educativos publican la disponibilidad de estudiantes mediante formularios específicos.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 4px solid #4dabf7;">
+                            <div style="background: #4dabf7; color: white; min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                            <div>
+                                <h4>Publicación y Notificación</h4>
+                                <p style="font-size:0.9rem; opacity:0.8;">La información se publica en las secciones correspondientes de la web. Se envían notificaciones por email a las partes suscritas (empresas sobre nuevos estudiantes, centros sobre nuevas ofertas).</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 4px solid #4dabf7;">
+                            <div style="background: #4dabf7; color: white; min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                            <div>
+                                <h4>Consulta y Contacto Directo</h4>
+                                <p style="font-size:0.9rem; opacity:0.8;">Empresas y centros consultan la información publicada y pueden establecer contacto directo a través de los datos facilitados.</p>
+                            </div>
+                        </div>
+                         <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 4px solid #4dabf7;">
+                            <div style="background: #4dabf7; color: white; min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">4</div>
+                            <div>
+                                <h4>Gestión de Prácticas</h4>
+                                <p style="font-size:0.9rem; opacity:0.8;">La coordinación y formalización de las prácticas se realiza directamente entre la empresa y el centro educativo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="canal-dudas" class="section">
+                <h2>Canal de Dudas</h2>
+                <p class="section-description">Si tiene alguna pregunta, necesita ayuda con la plataforma o desea realizar alguna sugerencia, por favor, complete el siguiente formulario.</p>
+                
+                <div class="form-container">
+                    <form id="dudas-form">
+                        <div class="form-group">
+                            <label for="dudas-nombre">Nombre completo *</label>
+                            <input type="text" id="dudas-nombre" name="dudas-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dudas-email">Correo electrónico *</label>
+                            <input type="email" id="dudas-email" name="dudas-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dudas-tipo-usuario">Soy un/una...</label>
+                            <select id="dudas-tipo-usuario" name="dudas-tipo-usuario">
+                                <option value="">Seleccione una opción...</option>
+                                <option value="empresa">Empresa</option>
+                                <option value="centro">Representante de Centro Educativo</option>
+                                <option value="estudiante">Estudiante</option>
+                                <option value="prospector">Prospector/a</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dudas-asunto">Asunto *</label>
+                            <input type="text" id="dudas-asunto" name="dudas-asunto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dudas-mensaje">Mensaje *</label>
+                            <textarea id="dudas-mensaje" name="dudas-mensaje" rows="5" placeholder="Describa su consulta o problema..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 DualExt - Plataforma de Prácticas FP. Todos los derechos reservados.</p>
+            <p>Una iniciativa para facilitar la Formación Profesional Dual en Extremadura.</p>
+        </div>
+    </footer>
+
+    <script>
+        const navMenu = document.getElementById('nav-menu');
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        function showSection(sectionId, clickedLink = null) {
+            // Ocultar todas las secciones principales
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Mostrar la sección solicitada
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            // Actualizar clase activa en links de navegación (opcional, para estilo)
+            navLinks.forEach(link => link.classList.remove('active-nav-link')); // Necesitarías CSS para .active-nav-link
+            if(clickedLink) {
+                // Buscar el 'li' padre si es un link dentro de un dropdown o directo
+                let parentLi = clickedLink.closest('li');
+                if(parentLi){
+                    // Si es un link de dropdown, marcar el link principal del dropdown
+                    if(parentLi.classList.contains('dropdown-content')) {
+                         parentLi.closest('.dropdown').querySelector('a').classList.add('active-nav-link');
+                    } else {
+                        clickedLink.classList.add('active-nav-link');
+                    }
+                }
+            }
+
+
+            // Cerrar el menú hamburguesa si está abierto (en móvil)
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                 document.querySelector('.hamburger').classList.remove('active');
+            }
+            
+            // Scroll al inicio de la sección
+            if(activeSection){
+                // activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                 window.scrollTo({ top: activeSection.offsetTop - 80, behavior: 'smooth' }); // 80px para compensar navbar fija
+            }
+        }
+        
+        function toggleMenu() {
+            navMenu.classList.toggle('active');
+            document.querySelector('.hamburger').classList.toggle('active'); // Para animar el icono si se desea
+        }
+
+        // Mostrar la sección 'inicio' por defecto al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('inicio');
+
+            // Lógica para manejar envíos de formularios (ejemplo placeholder)
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevenir envío real por ahora
+                    
+                    // Aquí iría la lógica para enviar los datos del formulario
+                    // Por ejemplo, usando Fetch API a un backend o a Google Apps Script
+                    
+                    // Simulación de envío exitoso
+                    alert(`Formulario "${this.id}" enviado (simulación).\nEn una aplicación real, los datos se procesarían aquí.`);
+                    this.reset(); // Limpiar el formulario
+                });
+            });
+        });
+
+        // Cerrar dropdowns si se hace clic fuera (opcional, mejora UX)
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropdown > a')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              // Esto es una simplificación, se necesitaría una lógica más robusta
+              // si se quiere que el dropdown permanezca abierto al hacer clic dentro de él.
+              // Por ahora, se cerrarán si el clic no es en el activador.
+            }
+          }
+        }
+
+    </script>
+</body>
+</html>
