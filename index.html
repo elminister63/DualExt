@@ -533,7 +533,8 @@
         }
 
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
 
 </head>
 <body>
@@ -1027,13 +1028,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const publicSpreadsheetURL = 'https://docs.google.com/spreadsheets/d/1GWoy4atSVG3GscgRmFTssmYSgSgWtCNpdz_gdcsIVy4/pubhtml';
+  const sheetCSV = 'https://docs.google.com/spreadsheets/d/1GWoy4atSVG3GscgRmFTssmYSgSgWtCNpdz_gdcsIVy4/export?format=csv';
 
-  function showInfo(data) {
+  Papa.parse(sheetCSV, {
+  download: true,
+  header: true,
+  complete: function(results) {
+    const data = results.data;
     const tableBody = document.querySelector("#ofertas-table tbody");
-    tableBody.innerHTML = ""; // Limpiar tabla antes de llenar
+    tableBody.innerHTML = "";
 
-    data.forEach((row) => {
+    data.forEach(row => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${row.Empresa || ""}</td>
@@ -1045,12 +1050,8 @@ document.addEventListener("DOMContentLoaded", function () {
       tableBody.appendChild(tr);
     });
   }
+});
 
-  Tabletop.init({
-    key: publicSpreadsheetURL,
-    callback: showInfo,
-    simpleSheet: true
-  });
 });
 
 
