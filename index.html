@@ -301,7 +301,11 @@
             color: #e0e0e0;
             font-size: 1rem;
         }
-
+        /* Mejora de visibilidad para las opciones del SELECT */
+        .form-group select option {
+            background: #16213e; /* Fondo oscuro, igual que el tema */
+            color: #e0e0e0;      /* Texto claro para un buen contraste */
+        }
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -533,7 +537,7 @@
         }
 
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  
 
 
 </head>
@@ -723,14 +727,92 @@
                 </div>
             </section>
 
+            <style>
+                /* ... (aquí irían el resto de estilos que ya tienes) ... */
+                .checkbox-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 1rem;
+                    margin-bottom: 1.5rem;
+                    padding: 1.5rem;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 10px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+                .checkbox-group {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .checkbox-group label {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.8rem;
+                    padding: 0.5rem;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    transition: background-color 0.2s ease;
+                }
+                .checkbox-group label:hover {
+                    background-color: rgba(77, 171, 247, 0.1);
+                }
+                .checkbox-group input[type="checkbox"] {
+                   width: 1.2em;
+                   height: 1.2em;
+                   accent-color: #4dabf7;
+                }
+                 h4.checkbox-title {
+                    color: #4dabf7;
+                    margin-bottom: 1rem;
+                    text-align: left;
+                    font-weight: 500;
+                }
+            </style>
+
             <section id="empresas-suscribirse" class="section">
                 <h2>Empresas: Suscribirse a Novedades</h2>
                 <div class="newsletter">
                     <h3>Manténgase Informado</h3>
-                    <p>Suscríbase para recibir notificaciones sobre nuevos grupos de estudiantes disponibles, eventos y noticias de interés para empresas colaboradoras.</p>
-                    <form id="empresa-suscripcion-form" class="newsletter-form">
-                        <input type="email" id="empresa-suscripcion-email" name="email" placeholder="Su correo electrónico" required>
-                        <button type="submit" class="btn btn-primary">Suscribirse</button>
+                    <p>Seleccione las familias profesionales de su interés y le notificaremos cuando haya nuevos estudiantes disponibles. Si no selecciona ninguna, se suscribirá a todas las novedades.</p>
+                    
+                    <form id="empresa-suscripcion-form" class="newsletter-form" style="flex-direction: column;">
+                        
+                        <h4 class="checkbox-title">Seleccione las familias profesionales de su interés:</h4>
+                        <div class="checkbox-container">
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="familia" value="actividades-fisicas"> Actividades Físicas y Deportivas</label>
+                                <label><input type="checkbox" name="familia" value="administracion"> Administración y Gestión</label>
+                                <label><input type="checkbox" name="familia" value="agraria"> Agraria</label>
+                                <label><input type="checkbox" name="familia" value="artes-graficas"> Artes Gráficas</label>
+                                <label><input type="checkbox" name="familia" value="comercio-marketing"> Comercio y Marketing</label>
+                                <label><input type="checkbox" name="familia" value="edificacion"> Edificación y Obra Civil</label>
+                                <label><input type="checkbox" name="familia" value="electricidad"> Electricidad y Electrónica</label>
+                                <label><input type="checkbox" name="familia" value="energia-agua"> Energía y Agua</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="familia" value="fabricacion-mecanica"> Fabricación Mecánica</label>
+                                <label><input type="checkbox" name="familia" value="hosteleria-turismo"> Hostelería y Turismo</label>
+                                <label><input type="checkbox" name="familia" value="imagen-personal"> Imagen Personal</label>
+                                <label><input type="checkbox" name="familia" value="imagen-sonido"> Imagen y Sonido</label>
+                                <label><input type="checkbox" name="familia" value="industrias-alimentarias"> Industrias Alimentarias</label>
+                                <label><input type="checkbox" name="familia" value="industrias-extractivas"> Industrias Extractivas</label>
+                                <label><input type="checkbox" name="familia" value="informatica-comunicaciones"> Informática y Comunicaciones</label>
+                                <label><input type="checkbox" name="familia" value="instalacion-mantenimiento"> Instalación y Mantenimiento</label>
+                            </div>
+                             <div class="checkbox-group">
+                                <label><input type="checkbox" name="familia" value="madera-mueble"> Madera, mueble y Corcho</label>
+                                <label><input type="checkbox" name="familia" value="quimica"> Química</label>
+                                <label><input type="checkbox" name="familia" value="sanidad"> Sanidad</label>
+                                <label><input type="checkbox" name="familia" value="seguridad-medio-ambiente"> Seguridad y Medio Ambiente</label>
+                                <label><input type="checkbox" name="familia" value="servicios-socioculturales"> Servicios Socioculturales y a la Comunidad</label>
+                                <label><input type="checkbox" name="familia" value="textil-confeccion"> Textil, confección y Piel</label>
+                                <label><input type="checkbox" name="familia" value="transporte-vehiculos"> Transporte y Mantenimiento de Vehículos</label>
+                             </div>
+                        </div>
+
+                        <div style="display: flex; width: 100%; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                            <input type="email" id="empresa-suscripcion-email" name="email" placeholder="Su correo electrónico" required style="flex: 1; min-width: 250px;">
+                            <button type="submit" class="btn btn-primary">Suscribirse</button>
+                        </div>
                     </form>
                     <p class="unsubscribe-link">Podrá cancelar su suscripción en cualquier momento desde el pie de página de nuestros correos.</p>
                 </div>
@@ -754,27 +836,146 @@
                 </div>
             </section>
             
-            <section id="centros-publicar-estudiantes" class="section">
+           <section id="centros-publicar-estudiantes" class="section">
                 <h2>Centros: Publicar Estudiantes Disponibles</h2>
                 <p class="section-description">Rellene este formulario para registrar los grupos de estudiantes disponibles para prácticas.</p>
                  <div class="form-container">
                     <form id="centro-estudiantes-form">
                         <div class="form-group">
-                            <label for="centro-localidad">Localidad del centro *</label>
-                            <input type="text" id="centro-localidad" name="centro-localidad" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="centro-nombre">Nombre del Centro Educativo *</label>
-                            <input type="text" id="centro-nombre" name="centro-nombre" required>
+                            <label for="localidad-centro">Localidad - Centro *</label>
+                            <select id="localidad-centro" name="localidad-centro" required>
+                                <option value="">Seleccione un centro...</option>
+                                <option value="aceuchal-ies-tierra-de-barros">ACEUCHAL - I.E.S. TIERRA DE BARROS</option>
+                                <option value="alburquerque-ies-castillo-de-luna">ALBURQUERQUE - I.E.S. CASTILLO DE LUNA</option>
+                                <option value="alcuescar-ies-santa-lucia-del-trampal">ALCUESCAR - I.E.S. SANTA LUCIA DEL TRAMPAL</option>
+                                <option value="almendralejo-ies-arroyo-harnina">ALMENDRALEJO - I.E.S. ARROYO HARNINA</option>
+                                <option value="almendralejo-ies-santiago-apostol">ALMENDRALEJO - I.E.S. SANTIAGO APÓSTOL</option>
+                                <option value="almendralejo-ies-carolina-coronado">ALMENDRALEJO - I.E.S. CAROLINA CORONADO</option>
+                                <option value="arroyo-de-la-luz-ies-luis-de-morales">ARROYO DE LA LUZ - I.E.S. LUIS DE MORALES</option>
+                                <option value="arroyo-de-san-servan-ies-tamon-y-sala">ARROYO DE SAN SERVAN - I.E.S. TAMON Y SALA</option>
+                                <option value="azuaga-ies-bembezar">AZUAGA - I.E.S. BEMBEZAR</option>
+                                <option value="badajoz-ies-reino-aftasi">BADAJOZ - I.E.S. REINO AFTASI</option>
+                                <option value="badajoz-ies-castelar">BADAJOZ - I.E.S. CASTELAR</option>
+                                <option value="badajoz-ies-zurbaran">BADAJOZ - I.E.S. ZURBARAN</option>
+                                <option value="badajoz-ies-bioclimatico">BADAJOZ - I.E.S. BIOCLIMATICO</option>
+                                <option value="badajoz-ies-san-jose">BADAJOZ - I.E.S. SAN JOSE</option>
+                                <option value="badajoz-col-ntra-sra-del-carmen">BADAJOZ - COL. NTRA. SRA. DEL CARMEN</option>
+                                <option value="badajoz-ies-san-fernando">BADAJOZ - I.E.S. SAN FERNANDO</option>
+                                <option value="badajoz-ies-extremadura">BADAJOZ - I.E.S. EXTREMADURA</option>
+                                <option value="badajoz-col-salesiano-ramon-izarduy">BADAJOZ - COL. SALESIANO RAMON IZARDUY</option>
+                                <option value="badajoz-ies-maestro-domingo-caceres">BADAJOZ - I.E.S. MAESTRO DOMINGO CACERES</option>
+                                <option value="badajoz-ies-san-roque">BADAJOZ - I.E.S. SAN ROQUE</option>
+                                <option value="badajoz-ies-brotens">BADAJOZ - I.E.S. BROTENS</option>
+                                <option value="barcarrota-ies-virgen-del-soterraño">BARCARROTA - I.E.S. VIRGEN DEL SOTERRAÑO</option>
+                                <option value="burguillos-del-cerro-ies-virgen-de-la-encina">BURGUILLOS DEL CERRO - I.E.S. VIRGEN DE LA ENCINA</option>
+                                <option value="cabeza-del-buey-ies-muñoz-torrero">CABEZA DEL BUEY - I.E.S. MUÑOZ TORRERO</option>
+                                <option value="caceres-ies-javier-garcia-tellez">CACERES - I.E.S. JAVIER GARCIA TELLEZ</option>
+                                <option value="caceres-ies-al-qazeres">CACERES - I.E.S. AL-QAZERES</option>
+                                <option value="caceres-ies-el-brocense">CACERES - I.E.S. EL BROCENSE</option>
+                                <option value="caceres-ies-agora">CACERES - I.E.S. AGORA</option>
+                                <option value="caceres-ies-universidad-laboral">CACERES - I.E.S. UNIVERSIDAD LABORAL</option>
+                                <option value="caceres-ies-norba-caeserina">CACERES - I.E.S. NORBA CAESERINA</option>
+                                <option value="caceres-ies-virgen-de-guadalupe">CACERES - I.E.S. VIRGEN DE GUADALUPE</option>
+                                <option value="caceres-ies-hernandez-pacheco">CACERES - I.E.S. HERNANDEZ PACHECO</option>
+                                <option value="calamonte-ies-ruta-de-la-plata">CALAMONTE - I.E.S. RUTA DE LA PLATA</option>
+                                <option value="caminomorisco-ies-gregorio-marañon">CAMINOMORISCO - I.E.S. GREGORIO MARAÑON</option>
+                                <option value="campanario-ies-campanario">CAMPANARIO - I.E.S. CAMPANARIO</option>
+                                <option value="casar-de-caceres-ies-via-de-la-plata">CASAR DE CACERES - I.E.S. VIA DE LA PLATA</option>
+                                <option value="castuera-ies-de-castuera">CASTUERA - I.E.S. DE CASTUERA</option>
+                                <option value="coria-ies-alagon">CORIA - I.E.S. ALAGON</option>
+                                <option value="coria-ies-coria">CORIA - I.E.S. CORIA</option>
+                                <option value="don-benito-ies-cuatro-caminos">DON BENITO - I.E.S. CUATRO CAMINOS</option>
+                                <option value="don-benito-ies-don-oso">DON BENITO - I.E.S. DON OSO</option>
+                                <option value="don-benito-ies-luis-chamacero">DON BENITO - I.E.S. LUIS CHAMACERO</option>
+                                <option value="don-benito-ies-jose-manzano">DON BENITO - I.E.S. JOSE MANZANO</option>
+                                <option value="don-benito-ies-serena">DON BENITO - I.E.S. SERENA</option>
+                                <option value="fornillos-de-aliste-ies-valverde-de-lucerna">FORNILLOS DE ALISTE - I.E.S. VALVERDE DE LUCERNA</option>
+                                <option value="fuente-de-cantos-ies-cristobal-de-monroy">FUENTE DE CANTOS - I.E.S. CRISTOBAL DE MONROY</option>
+                                <option value="fregenal-de-la-sierra-ies-fregenal-de-la-sierra">FREGENAL DE LA SIERRA - I.E.S. FREGENAL DE LA SIERRA</option>
+                                <option value="gata-ies-valle-de-arrago">GATA - I.E.S. VALLE DE ARRAGO</option>
+                                <option value="guadalupe-ies-las-villuercas">GUADALUPE - I.E.S. LAS VILLUERCAS</option>
+                                <option value="guareña-ies-eugenio-frutos">GUAREÑA - I.E.S. EUGENIO FRUTOS</option>
+                                <option value="hervas-ies-valle-del-ambroz">HERVAS - I.E.S. VALLE DEL AMBROZ</option>
+                                <option value="herrera-del-duque-ies-benazaire">HERRERA DEL DUQUE - I.E.S. BENAZAIRE</option>
+                                <option value="jaraiz-de-la-vera-ies-maestro-gonzalo-korreas">JARAIZ DE LA VERA - I.E.S. MAESTRO GONZALO KORREAS</option>
+                                <option value="jerez-de-los-caballeros-ies-el-pomar">JEREZ DE LOS CABALLEROS - I.E.S. EL POMAR</option>
+                                <option value="jerez-de-los-caballeros-ies-ramon-carande">JEREZ DE LOS CABALLEROS - I.E.S. RAMON CARANDE</option>
+                                <option value="llerena-ies-de-llerena">LLERENA - I.E.S. DE LLERENA</option>
+                                <option value="logrosan-ies-mario-roso-de-luna">LOGROSAN - I.E.S. MARIO ROSO DE LUNA</option>
+                                <option value="losar-de-la-vera-ies-eugenio-hermoso">LOSAR DE LA VERA - I.E.S. EUGENIO HERMOSO</option>
+                                <option value="malpartida-de-caceres-ies-los-barruecos">MALPARTIDA DE CACERES - I.E.S. LOS BARRUECOS</option>
+                                <option value="merida-ies-santa-eulalia">MERIDA - I.E.S. SANTA EULALIA</option>
+                                <option value="merida-ies-extremadura">MERIDA - I.E.S. EXTREMADURA</option>
+                                <option value="merida-ies-albarregas">MERIDA - I.E.S. ALBARREGAS</option>
+                                <option value="merida-col-san-luis">MERIDA - COL. SAN LUIS</option>
+                                <option value="merida-col-cooperativa-docente-santa-eulalia">MERIDA - COL. COOPERATIVA DOCENTE SANTA EULALIA</option>
+                                <option value="merida-ies-emerita-augusta">MERIDA - I.E.S. EMERITA AUGUSTA</option>
+                                <option value="merida-ies-saenz-de-buruga">MERIDA - I.E.S. SAENZ DE BURUAGA</option>
+                                <option value="merida-cepa-augusta-emerita">MERIDA - CEPA AUGUSTA EMERITA</option>
+                                <option value="miajadas-ies-miajadas">MIAJADAS - I.E.S. MIAJADAS</option>
+                                <option value="monasterio-ies-maestro-juan-calero">MONASTERIO - I.E.S. MAESTRO JUAN CALERO</option>
+                                <option value="montehermoso-ies-valle-del-jerte">MONTEHERMOSO - I.E.S. VALLE DEL JERTE</option>
+                                <option value="montijo-ies-extremadura">MONTIJO - I.E.S. EXTREMADURA</option>
+                                <option value="montijo-ies-vegas-bajas">MONTIJO - I.E.S. VEGAS BAJAS</option>
+                                <option value="moraleja-ies-jairo-brisel">MORALEJA - I.E.S. JAIRO BRISEL</option>
+                                <option value="navaconcejo-ies-valle-del-jerte-c-f-p">NAVACONCEJO - I.E.S. VALLE DEL JERTE-C.F.P.</option>
+                                <option value="navalmoral-de-la-mata-ies-augustobriga">NAVALMORAL DE LA MATA - I.E.S. AUGUSTOBRIGA</option>
+                                <option value="navalmoral-de-la-mata-ies-albalat">NAVALMORAL DE LA MATA - I.E.S. ALBALAT</option>
+                                <option value="navalmoral-de-la-mata-ies-zurbaran">NAVALMORAL DE LA MATA - I.E.S. ZURBARAN</option>
+                                <option value="oliva-de-la-frontera-ies-virgen-de-gracia">OLIVA DE LA FRONTERA - I.E.S. VIRGEN DE GRACIA</option>
+                                <option value="olivenza-ies-puente-ajuda">OLIVENZA - I.E.S. PUENTE AJUDA</option>
+                                <option value="plasencia-ies-virgen-del-puerto">PLASENCIA - I.E.S. VIRGEN DEL PUERTO</option>
+                                <option value="plasencia-ies-gabriel-y-galan">PLASENCIA - I.E.S. GABRIEL Y GALAN</option>
+                                <option value="plasencia-ies-parque-de-monfrague">PLASENCIA - I.E.S. PARQUE DE MONFRAGUE</option>
+                                <option value="plasencia-ies-perez-comendor">PLASENCIA - I.E.S. PEREZ COMENDOR</option>
+                                <option value="puebla-de-alcollarin-ies-colonos">PUEBLA DE ALCOLLARIN - I.E.S. COLONOS</option>
+                                <option value="puebla-de-la-calzada-ies-enrique-diez-canedo">PUEBLA DE LA CALZADA - I.E.S. ENRIQUE DIEZ CANEDO</option>
+                                <option value="quintana-de-la-serena-ies-quintana-de-la-serena">QUINTANA DE LA SERENA - I.E.S. QUINTANA DE LA SERENA</option>
+                                <option value="santa-amalia-ies-santa-amalia">SANTA AMALIA - I.E.S. SANTA AMALIA</option>
+                                <option value="santa-marta-de-los-barros-ies-santa-marta">SANTA MARTA DE LOS BARROS - I.E.S. SANTA MARTA</option>
+                                <option value="santos-de-maimona-los-ies-doctor-fernandez-santana">SANTOS DE MAIMONA (LOS) - I.E.S. DOCTOR FERNANDEZ SANTANA</option>
+                                <option value="segura-de-leon-ies-san-vicente">SEGURA DE LEON - I.E.S. SAN VICENTE</option>
+                                <option value="siruela-ies-la-siberia">SIRUELA - I.E.S. LA SIBERIA</option>
+                                <option value="talavera-la-real-ies-bachiller-diego-sanchez">TALAVERA LA REAL - I.E.S. BACHILLER DIEGO SANCHEZ</option>
+                                <option value="talayuela-ies-san-martin">TALAYUELA - I.E.S. SAN MARTIN</option>
+                                <option value="torrejoncillo-ies-vasco-de-la-zarza">TORREJONCILLO - I.E.S. VASCO DE LA ZARZA</option>
+                                <option value="trujillo-ies-francisco-de-orellana">TRUJILLO - I.E.S. FRANCISCO DE ORELLANA</option>
+                                <option value="valencia-de-alcantara-ies-san-pedro-de-alcantara">VALENCIA DE ALCANTARA - I.E.S. SAN PEDRO DE ALCANTARA</option>
+                                <option value="valverde-de-leganes-ies-campo-de-san-jorge">VALVERDE DE LEGANES - I.E.S. CAMPO DE SAN JORGE</option>
+                                <option value="villafranca-de-los-barros-ies-melendez-valdes">VILLAFRANCA DE LOS BARROS - I.E.S. MELENDEZ VALDES</option>
+                                <option value="villanueva-de-la-serena-ies-la-serena">VILLANUEVA DE LA SERENA - I.E.S. LA SERENA</option>
+                                <option value="villanueva-de-la-serena-ies-san-jose">VILLANUEVA DE LA SERENA - I.E.S. SAN JOSE</option>
+                                <option value="villanueva-de-la-serena-ies-pedro-de-valdivia">VILLANUEVA DE LA SERENA - I.E.S. PEDRO DE VALDIVIA</option>
+                                <option value="villanueva-del-fresno-ies-san-gines">VILLANUEVA DEL FRESNO - I.E.S. SAN GINES</option>
+                                <option value="zafra-ies-suarez-de-figueroa">ZAFRA - I.E.S. SUAREZ DE FIGUEROA</option>
+                                <option value="zafra-ies-cristo-del-rosario">ZAFRA - I.E.S. CRISTO DEL ROSARIO</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="centro-familia-profesional">Familia profesional de los estudiantes *</label>
                             <select id="centro-familia-profesional" name="centro-familia-profesional" required>
-                                <option value="">Seleccione una familia profesional</option>
                                 <option value="actividades-fisicas">Actividades Físicas y Deportivas</option>
                                 <option value="administracion">Administración y Gestión</option>
                                 <option value="agraria">Agraria</option>
-                                 <option value="informatica-comunicaciones">Informática y Comunicaciones</option>
+                                <option value="artes-graficas">Artes Gráficas</option>
+                                <option value="comercio-marketing">Comercio y Marketing</option>
+                                <option value="edificacion">Edificación y Obra Civil</option>
+                                <option value="electricidad">Electricidad y Electrónica</option>
+                                <option value="energia-agua">Energía y Agua</option>
+                                <option value="fabricacion-mecanica">Fabricación Mecánica</option>
+                                <option value="hosteleria-turismo">Hostelería y Turismo</option>
+                                <option value="imagen-personal">Imagen Personal</option>
+                                <option value="imagen-sonido">Imagen y Sonido</option>
+                                <option value="industrias-alimentarias">Industrias Alimentarias</option>
+                                <option value="industrias-extractivas">Industrias Extractivas</option>
+                                <option value="informatica-comunicaciones">Informática y Comunicaciones</option>
+                                <option value="instalacion-mantenimiento">Instalación y Mantenimiento</option>
+                                <option value="madera-mueble">Madera, mueble y Corcho</option>
+                                <option value="quimica">Química</option>
+                                <option value="sanidad">Sanidad</option>
+                                <option value="seguridad-medio-ambiente">Seguridad y Medio Ambiente</option>
+                                <option value="servicios-socioculturales">Servicios Socioculturales y a la Comunidad</option>
+                                <option value="textil-confeccion">Textil, confección y Piel</option>
                                 <option value="transporte-vehiculos">Transporte y Mantenimiento de Vehículos</option>
                             </select>
                         </div>
@@ -783,7 +984,7 @@
                             <input type="number" id="centro-num-estudiantes" name="centro-num-estudiantes" min="1" required>
                         </div>
                         <div class="form-group">
-                            <label for="centro-fecha-disponibilidad">Fecha de disponibilidad</label>
+                            <label for="centro-fecha-disponibilidad">Fecha máxima de disponibilidad</label>
                             <input type="date" id="centro-fecha-disponibilidad" name="centro-fecha-disponibilidad">
                         </div>
                         <div class="form-group">
@@ -923,138 +1124,229 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 DualExt - Plataforma de Prácticas FP. Todos los derechos reservados.</p>
+            <p>&copy; 2025 DualExt - Conectando Centros Educativos y Empresas.</p>
             <p>Una iniciativa para facilitar la Formación Profesional Dual en Extremadura.</p>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        const navMenu = document.getElementById('nav-menu');
-        const sections = document.querySelectorAll('.section');
-        const navLinks = document.querySelectorAll('.nav-menu a');
 
-        function showSection(sectionId, clickedLink = null) {
-            // Ocultar todas las secciones principales
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // Mostrar la sección solicitada
-            const activeSection = document.getElementById(sectionId);
-            if (activeSection) {
-                activeSection.classList.add('active');
-            }
-
-            // Actualizar clase activa en links de navegación (opcional, para estilo)
-            navLinks.forEach(link => link.classList.remove('active-nav-link')); // Necesitarías CSS para .active-nav-link
-            if(clickedLink) {
-                // Buscar el 'li' padre si es un link dentro de un dropdown o directo
-                let parentLi = clickedLink.closest('li');
-                if(parentLi){
-                    // Si es un link de dropdown, marcar el link principal del dropdown
-                    if(parentLi.classList.contains('dropdown-content')) {
-                         parentLi.closest('.dropdown').querySelector('a').classList.add('active-nav-link');
-                    } else {
-                        clickedLink.classList.add('active-nav-link');
-                    }
-                }
-            }
-
-
-            // Cerrar el menú hamburguesa si está abierto (en móvil)
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                 document.querySelector('.hamburger').classList.remove('active');
-            }
-            
-            // Scroll al inicio de la sección
-            if(activeSection){
-                // activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                 window.scrollTo({ top: activeSection.offsetTop - 80, behavior: 'smooth' }); // 80px para compensar navbar fija
-            }
-        }
         
-        function toggleMenu() {
-            navMenu.classList.toggle('active');
-            document.querySelector('.hamburger').classList.toggle('active'); // Para animar el icono si se desea
-        }
 
-        // Mostrar la sección 'inicio' por defecto al cargar
-        document.addEventListener('DOMContentLoaded', () => {
-            showSection('inicio');
+        // =================================================================
+// SCRIPT UNIFICADO PARA DUALEXT CON INTEGRACIÓN DE SUPABASE
+// =================================================================
 
-            
-        });
+// --- LÓGICA DE NAVEGACIÓN Y UI (SE MANTIENE IGUAL) ---
 
-        // Cerrar dropdowns si se hace clic fuera (opcional, mejora UX)
-        window.onclick = function(event) {
-          if (!event.target.matches('.dropdown > a')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              // Esto es una simplificación, se necesitaría una lógica más robusta
-              // si se quiere que el dropdown permanezca abierto al hacer clic dentro de él.
-              // Por ahora, se cerrarán si el clic no es en el activador.
-            }
-          }
-        }
-         
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('dudas-form');
-  const scriptURL = "https://script.google.com/macros/s/AKfycbzhXVFLPI7U33EhuHky3Gt0rd5t4QbAHtDEIfvOl5oKmni7Vw9hnNhwczP4EXMeYQMVGA/exec";
+const navMenu = document.getElementById('nav-menu');
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-menu a');
 
-  form.addEventListener('submit', async function (event) {
-    event.preventDefault();
-
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch(scriptURL, {
-        method: 'POST',
-        body: formData
-      });
-
-      const result = await response.text();
-      if (result.trim() === "OK") {
-        alert("✅ Mensaje enviado correctamente. Gracias por tu consulta.");
-        form.reset();
-      } else {
-        alert("⚠️ Error al enviar los datos: " + result);
-      }
-    } catch (error) {
-      alert("❌ Error de conexión: " + error.message);
+function showSection(sectionId, clickedLink = null) {
+    sections.forEach(section => section.classList.remove('active'));
+    const activeSection = document.getElementById(sectionId);
+    if (activeSection) {
+        activeSection.classList.add('active');
     }
-  });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-  const sheetCSV = 'https://docs.google.com/spreadsheets/d/1GWoy4atSVG3GscgRmFTssmYSgSgWtCNpdz_gdcsIVy4/export?format=csv';
+    navLinks.forEach(link => link.classList.remove('active-nav-link'));
+    if (clickedLink) {
+        let parentLi = clickedLink.closest('li');
+        if (parentLi) {
+            if (parentLi.classList.contains('dropdown-content')) {
+                parentLi.closest('.dropdown').querySelector('a').classList.add('active-nav-link');
+            } else {
+                clickedLink.classList.add('active-nav-link');
+            }
+        }
+    }
 
-  Papa.parse(sheetCSV, {
-  download: true,
-  header: true,
-  complete: function(results) {
-    const data = results.data;
-    const tableBody = document.querySelector("#ofertas-table tbody");
-    tableBody.innerHTML = "";
+    if (navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        document.querySelector('.hamburger').classList.remove('active');
+    }
 
-    data.forEach(row => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${row.Empresa || ""}</td>
-        <td>${row.Familia || ""}</td>
-        <td>${row.Localidad || ""}</td>
-        <td>${row.Requisitos || ""}</td>
-        <td>${row.Contacto || ""}</td>
-      `;
-      tableBody.appendChild(tr);
+    window.scrollTo({ top: activeSection.offsetTop - 80, behavior: 'smooth' });
+}
+
+function toggleMenu() {
+    navMenu.classList.toggle('active');
+    document.querySelector('.hamburger').classList.toggle('active');
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown > a')) {
+        // Lógica simplificada para cerrar dropdowns
+    }
+}
+
+// --- LÓGICA PRINCIPAL DE LA APLICACIÓN ---
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // === 1. CONFIGURACIÓN DE SUPABASE ===
+    // TODO: Reemplaza con la URL y la Anon Key de tu proyecto de Supabase
+    const SUPABASE_URL = 'https://advfnyzzvvtwojkznczm.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkdmZueXp6dnZ0d29qa3puY3ptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxOTU5NzQsImV4cCI6MjA2NDc3MTk3NH0.HqvhzBtmIJJXFkwoFsonSVlg-T7psH5dyIecQLFtb7E';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('Supabase Client inicializado');
+
+
+    // === 2. CARGA INICIAL DE DATOS DESDE SUPABASE ===
+
+    // Muestra la sección de inicio por defecto
+    showSection('inicio');
+
+    // Función para cargar las ofertas de la tabla y mostrarlas
+    async function cargarOfertas() {
+        const tableBody = document.querySelector("#ofertas-table tbody");
+        if (!tableBody) return; // No hacer nada si la tabla no está en la página
+
+        // Hacemos la consulta a Supabase
+        const { data: ofertas, error } = await supabase
+            .from('ofertas_practicas')
+            .select('*')
+            .order('created_at', { ascending: false }); // Ordenar por más recientes
+
+        if (error) {
+            console.error("Error al cargar las ofertas:", error);
+            tableBody.innerHTML = `<tr><td colspan="5">Error al cargar datos. Inténtelo más tarde.</td></tr>`;
+            return;
+        }
+
+        // Limpiamos la tabla y la llenamos con los nuevos datos
+        tableBody.innerHTML = "";
+        if (ofertas.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5">No hay ofertas disponibles en este momento.</td></tr>`;
+        } else {
+            ofertas.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.nombre_empresa || ""}</td>
+                    <td>${row.familia_profesional || ""}</td>
+                    <td>${row.localidad || ""}</td>
+                    <td>${row.conocimientos_requeridos || ""}</td>
+                    <td>${row.contacto_empresa || ""}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+    }
+    
+    // Cargar las ofertas cuando la página esté lista
+    cargarOfertas();
+
+
+    // === 3. GESTIÓN DE ENVÍO DE FORMULARIOS A SUPABASE ===
+
+    // Formulario de Empresas: "Publicar Oferta"
+    document.getElementById('empresa-oferta-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const oferta = {
+            nombre_empresa: formData.get('empresa-nombre'),
+            contacto_empresa: formData.get('empresa-email'),
+            familia_profesional: formData.get('empresa-familia-profesional'),
+            conocimientos_requeridos: formData.get('empresa-requisitos-alumnos'),
+            localidad: formData.get('empresa-comarca'),
+            numero_alumnos: parseInt(formData.get('empresa-num-alumnos')),
+            detalles_adicionales: formData.get('empresa-descripcion-formacion')
+        };
+
+        const { error } = await supabase.from('ofertas_practicas').insert([oferta]);
+        if (error) {
+            alert('Hubo un error al enviar tu oferta.');
+            console.error(error);
+        } else {
+            alert('✅ ¡Oferta publicada con éxito!');
+            form.reset();
+            cargarOfertas(); // Recargar la tabla de ofertas para mostrar la nueva
+        }
     });
-  }
-});
+
+    // Formulario de Centros: "Publicar Estudiantes"
+    document.getElementById('centro-estudiantes-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const estudiante = {
+            localidad_centro: formData.get('localidad-centro'),
+            familia_profesional: formData.get('centro-familia-profesional'),
+            numero_estudiantes: parseInt(formData.get('centro-num-estudiantes')),
+            fecha_disponibilidad: formData.get('centro-fecha-disponibilidad') || null,
+            contacto_centro: formData.get('centro-contacto')
+        };
+
+        const { error } = await supabase.from('estudiantes_disponibles').insert([estudiante]);
+        if (error) {
+            alert('Hubo un error al publicar los estudiantes.');
+            console.error(error);
+        } else {
+            alert('✅ ¡Estudiantes publicados con éxito!');
+            form.reset();
+        }
+    });
+
+    // Formulario de Empresas: "Suscribirse a Novedades"
+    document.getElementById('empresa-suscripcion-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.querySelector('#empresa-suscripcion-email').value;
+        const familiasSeleccionadas = form.querySelectorAll('input[name="familia"]:checked');
+
+        if (familiasSeleccionadas.length === 0) {
+            alert('Por favor, selecciona al menos una familia profesional.');
+            return;
+        }
+
+        const suscripciones = Array.from(familiasSeleccionadas).map(checkbox => ({
+            email: email,
+            familia_profesional: checkbox.value
+        }));
+
+        const { error } = await supabase.from('suscripciones').insert(suscripciones);
+        if (error) {
+            if (error.code === '23505') {
+                alert('⚠️ Ya estás suscrito a una o más de las familias seleccionadas.');
+            } else {
+                alert('Hubo un error al procesar tu suscripción.');
+                console.error(error);
+            }
+        } else {
+            alert('✅ ¡Te has suscrito con éxito!');
+            form.reset();
+        }
+    });
+
+    // Formulario "Canal de Dudas"
+    document.getElementById('dudas-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const duda = {
+            autor_nombre: formData.get('dudas-nombre'),
+            autor_email: formData.get('dudas-email'),
+            categoria: formData.get('dudas-tipo-usuario'),
+            titulo: formData.get('dudas-asunto'),
+            pregunta: formData.get('dudas-mensaje'),
+            estado: 'abierta'
+        };
+
+        const { error } = await supabase.from('dudas').insert([duda]);
+        if (error) {
+            alert('Hubo un error al enviar tu mensaje.');
+            console.error(error);
+        } else {
+            alert('✅ ¡Mensaje enviado con éxito! Muchas gracias.');
+            form.reset();
+        }
+    });
 
 });
-
-
  
     </script>
 </body>
