@@ -717,15 +717,58 @@
             </section>
 
             <section id="empresas-ver-estudiantes" class="section">
-                <h2>Empresas: Ver Estudiantes Disponibles</h2>
-                <p class="section-description">Aquí podrá consultar la lista de estudiantes disponibles publicados por los centros educativos.</p>
-                 <div class="table-container">
-                    <div class="google-embed-placeholder">
-                        <h3>Aquí iría la tabla de Google Sheets/Data Studio con Estudiantes Disponibles</h3>
-                         <p>Este es un marcador de posición. Se mostrarían campos como: Especialidad, Localidad, Centro Educativo, Fecha de disponibilidad, etc., con opciones de filtrado.</p>
-                    </div>
-                </div>
-            </section>
+    <h2>Empresas: Ver Estudiantes Disponibles</h2>
+    <p class="section-description">Aquí podrá consultar la lista de estudiantes disponibles publicados por los centros educativos.</p>
+
+    <!-- Filtros -->
+    <div class="form-container" style="margin-bottom: 2rem;">
+      <div class="form-group">
+        <label for="filtro-familia">Filtrar por Familia Profesional:</label>
+        <select id="filtro-familia">
+          <option value="">Todas</option>
+          <option value="actividades-fisicas">Actividades Físicas y Deportivas</option>
+          <option value="administracion">Administración y Gestión</option>
+          <option value="agraria">Agraria</option>
+          <option value="artes-graficas">Artes Gráficas</option>
+          <option value="comercio-marketing">Comercio y Marketing</option>
+          <option value="edificacion">Edificación y Obra Civil</option>
+          <option value="electricidad">Electricidad y Electrónica</option>
+          <option value="energia-agua">Energía y Agua</option>
+          <option value="fabricacion-mecanica">Fabricación Mecánica</option>
+          <option value="hosteleria-turismo">Hostelería y Turismo</option>
+          <option value="informatica-comunicaciones">Informática y Comunicaciones</option>
+          <option value="sanidad">Sanidad</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="filtro-localidad">Filtrar por Centro / Localidad:</label>
+        <input type="text" id="filtro-localidad" placeholder="Escriba una localidad o centro...">
+      </div>
+    </div>
+
+    <!-- Tabla con ID -->
+    <div class="table-container">
+      <table id="estudiantes-table">
+        <thead>
+          <tr>
+            <th>Centro</th>
+            <th>Familia Profesional</th>
+            <th>Nº Estudiantes</th>
+            <th>Fecha de Disponibilidad</th>
+            <th>Contacto</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
+      <button id="anterior-pagina" class="btn btn-secondary">⬅ Anterior</button>
+      <button id="siguiente-pagina" class="btn btn-secondary">Siguiente ➡</button>
+    </div>
+  </section>
+
 
             <style>
                 /* ... (aquí irían el resto de estilos que ya tienes) ... */
@@ -1000,21 +1043,47 @@
     <h2>Centros: Ver Ofertas de Prácticas Actuales</h2>
     <p class="section-description">Explore las ofertas de prácticas publicadas por las empresas.</p>
 
-    <div class="table-container">
-        <table id="ofertas-table">
-            <thead>
-                <tr>
-                    <th>Empresa</th>
-                    <th>Familia Profesional</th>
-                    <th>Localidad</th>
-                    <th>Requisitos</th>
-                    <th>Contacto</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+    <!-- Filtros -->
+    <div class="form-container" style="margin-bottom: 2rem;">
+      <div class="form-group">
+        <label for="filtro-ofertas-familia">Filtrar por Familia Profesional:</label>
+        <select id="filtro-ofertas-familia">
+          <option value="">Todas</option>
+          <option value="actividades-fisicas">Actividades Físicas y Deportivas</option>
+          <option value="administracion">Administración y Gestión</option>
+          <option value="agraria">Agraria</option>
+          <option value="informatica-comunicaciones">Informática y Comunicaciones</option>
+          <option value="sanidad">Sanidad</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="filtro-ofertas-localidad">Filtrar por Localidad:</label>
+        <input type="text" id="filtro-ofertas-localidad" placeholder="Escriba una localidad...">
+      </div>
     </div>
-</section>
+
+    <!-- Tabla -->
+    <div class="table-container">
+      <table id="ofertas-table">
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Familia Profesional</th>
+            <th>Localidad</th>
+            <th>Requisitos</th>
+            <th>Contacto</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
+      <button id="ofertas-anterior-pagina" class="btn btn-secondary">⬅ Anterior</button>
+      <button id="ofertas-siguiente-pagina" class="btn btn-secondary">Siguiente ➡</button>
+    </div>
+  </section>
 
 
 
@@ -1140,51 +1209,7 @@
 
 // --- LÓGICA DE NAVEGACIÓN Y UI (SE MANTIENE IGUAL) ---
 
-const navMenu = document.getElementById('nav-menu');
-const sections = document.querySelectorAll('.section');
-const navLinks = document.querySelectorAll('.nav-menu a');
 
-function showSection(sectionId, clickedLink = null) {
-    sections.forEach(section => section.classList.remove('active'));
-    const activeSection = document.getElementById(sectionId);
-    if (activeSection) {
-        activeSection.classList.add('active');
-    }
-
-    navLinks.forEach(link => link.classList.remove('active-nav-link'));
-    if (clickedLink) {
-        let parentLi = clickedLink.closest('li');
-        if (parentLi) {
-            if (parentLi.classList.contains('dropdown-content')) {
-                parentLi.closest('.dropdown').querySelector('a').classList.add('active-nav-link');
-            } else {
-                clickedLink.classList.add('active-nav-link');
-            }
-        }
-    }
-
-    if (navMenu.classList.contains('active')) {
-        navMenu.classList.remove('active');
-        document.querySelector('.hamburger').classList.remove('active');
-    }
-
-    window.scrollTo({ top: activeSection.offsetTop - 80, behavior: 'smooth' });
-}
-
-function toggleMenu() {
-    navMenu.classList.toggle('active');
-    document.querySelector('.hamburger').classList.toggle('active');
-}
-
-window.onclick = function(event) {
-    if (!event.target.matches('.dropdown > a')) {
-        // Lógica simplificada para cerrar dropdowns
-    }
-}
-
-// --- LÓGICA PRINCIPAL DE LA APLICACIÓN ---
-
-document.addEventListener('DOMContentLoaded', () => {
 
     // === 1. CONFIGURACIÓN DE SUPABASE ===
     // TODO: Reemplaza con la URL y la Anon Key de tu proyecto de Supabase
@@ -1195,159 +1220,137 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Supabase Client inicializado');
 
 
-    // === 2. CARGA INICIAL DE DATOS DESDE SUPABASE ===
+     // --- LÓGICA DE NAVEGACIÓN Y UI ---
+  const navMenu = document.getElementById('nav-menu');
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.nav-menu a');
 
-    // Muestra la sección de inicio por defecto
-    showSection('inicio');
-
-    // Función para cargar las ofertas de la tabla y mostrarlas
-    async function cargarOfertas() {
-        const tableBody = document.querySelector("#ofertas-table tbody");
-        if (!tableBody) return; // No hacer nada si la tabla no está en la página
-
-        // Hacemos la consulta a Supabase
-        const { data: ofertas, error } = await supabase
-            .from('ofertas_practicas')
-            .select('*')
-            .order('created_at', { ascending: false }); // Ordenar por más recientes
-
-        if (error) {
-            console.error("Error al cargar las ofertas:", error);
-            tableBody.innerHTML = `<tr><td colspan="5">Error al cargar datos. Inténtelo más tarde.</td></tr>`;
-            return;
-        }
-
-        // Limpiamos la tabla y la llenamos con los nuevos datos
-        tableBody.innerHTML = "";
-        if (ofertas.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5">No hay ofertas disponibles en este momento.</td></tr>`;
-        } else {
-            ofertas.forEach(row => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${row.nombre_empresa || ""}</td>
-                    <td>${row.familia_profesional || ""}</td>
-                    <td>${row.localidad || ""}</td>
-                    <td>${row.conocimientos_requeridos || ""}</td>
-                    <td>${row.contacto_empresa || ""}</td>
-                `;
-                tableBody.appendChild(tr);
-            });
-        }
+  function showSection(sectionId, clickedLink = null) {
+    sections.forEach(section => section.classList.remove('active'));
+    const activeSection = document.getElementById(sectionId);
+    if (activeSection) {
+      activeSection.classList.add('active');
     }
-    
-    // Cargar las ofertas cuando la página esté lista
+
+    navLinks.forEach(link => link.classList.remove('active-nav-link'));
+    if (clickedLink) {
+      let parentLi = clickedLink.closest('li');
+      if (parentLi) {
+        if (parentLi.classList.contains('dropdown-content')) {
+          parentLi.closest('.dropdown').querySelector('a').classList.add('active-nav-link');
+        } else {
+          clickedLink.classList.add('active-nav-link');
+        }
+      }
+    }
+
+    if (navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      document.querySelector('.hamburger').classList.remove('active');
+    }
+
+    window.scrollTo({ top: activeSection.offsetTop - 80, behavior: 'smooth' });
+  }
+
+  function toggleMenu() {
+    navMenu.classList.toggle('active');
+    document.querySelector('.hamburger').classList.toggle('active');
+  }
+
+  // === ESTUDIANTES DISPONIBLES ===
+  let paginaEstudiantes = 1;
+  const estudiantesPorPagina = 10;
+
+  async function cargarEstudiantesDisponibles() {
+    const tbody = document.querySelector("#estudiantes-table tbody");
+    const filtroFamilia = document.getElementById("filtro-familia").value.toLowerCase();
+    const filtroLocalidad = document.getElementById("filtro-localidad").value.toLowerCase();
+
+    const { data: estudiantes, error } = await supabase
+      .from('estudiantes_disponibles')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error("Error estudiantes:", error);
+      tbody.innerHTML = `<tr><td colspan="5">Error al cargar datos</td></tr>`;
+      return;
+    }
+
+    const filtrados = estudiantes.filter(e =>
+      (!filtroFamilia || e.familia_profesional.toLowerCase().includes(filtroFamilia)) &&
+      (!filtroLocalidad || e.localidad_centro.toLowerCase().includes(filtroLocalidad))
+    );
+
+    const inicio = (paginaEstudiantes - 1) * estudiantesPorPagina;
+    const paginados = filtrados.slice(inicio, inicio + estudiantesPorPagina);
+
+    tbody.innerHTML = paginados.length ? paginados.map(e => `
+      <tr>
+        <td>${e.localidad_centro}</td>
+        <td>${e.familia_profesional}</td>
+        <td>${e.numero_estudiantes || ''}</td>
+        <td>${e.fecha_disponibilidad || ''}</td>
+        <td>${e.contacto_referencia}</td>
+      </tr>
+    `).join('') : `<tr><td colspan="5">No hay estudiantes disponibles.</td></tr>`;
+  }
+
+  document.getElementById("filtro-familia").addEventListener("change", () => { paginaEstudiantes = 1; cargarEstudiantesDisponibles(); });
+  document.getElementById("filtro-localidad").addEventListener("input", () => { paginaEstudiantes = 1; cargarEstudiantesDisponibles(); });
+  document.getElementById("anterior-pagina").addEventListener("click", () => { if (paginaEstudiantes > 1) { paginaEstudiantes--; cargarEstudiantesDisponibles(); } });
+  document.getElementById("siguiente-pagina").addEventListener("click", () => { paginaEstudiantes++; cargarEstudiantesDisponibles(); });
+
+  // === OFERTAS DISPONIBLES ===
+  let paginaOfertas = 1;
+  const ofertasPorPagina = 10;
+
+  async function cargarOfertas() {
+    const tbody = document.querySelector("#ofertas-table tbody");
+    if (!tbody) return;
+
+    const familia = document.getElementById("filtro-ofertas-familia")?.value.toLowerCase() || "";
+    const localidad = document.getElementById("filtro-ofertas-localidad")?.value.toLowerCase() || "";
+
+    const { data: ofertas, error } = await supabase
+      .from('ofertas_practicas')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error("Error ofertas:", error);
+      tbody.innerHTML = `<tr><td colspan="5">Error al cargar datos</td></tr>`;
+      return;
+    }
+
+    const filtradas = ofertas.filter(o =>
+      (!familia || o.familia_profesional.toLowerCase().includes(familia)) &&
+      (!localidad || o.localidad.toLowerCase().includes(localidad))
+    );
+
+    const inicio = (paginaOfertas - 1) * ofertasPorPagina;
+    const paginadas = filtradas.slice(inicio, inicio + ofertasPorPagina);
+
+    tbody.innerHTML = paginadas.length ? paginadas.map(o => `
+      <tr>
+        <td>${o.nombre_empresa}</td>
+        <td>${o.familia_profesional}</td>
+        <td>${o.localidad}</td>
+        <td>${o.conocimientos_requeridos || ''}</td>
+        <td>${o.contacto_empresa}</td>
+      </tr>
+    `).join('') : `<tr><td colspan="5">No hay resultados.</td></tr>`;
+  }
+
+  document.getElementById("filtro-ofertas-familia")?.addEventListener("change", () => { paginaOfertas = 1; cargarOfertas(); });
+  document.getElementById("filtro-ofertas-localidad")?.addEventListener("input", () => { paginaOfertas = 1; cargarOfertas(); });
+  document.getElementById("ofertas-anterior-pagina")?.addEventListener("click", () => { if (paginaOfertas > 1) { paginaOfertas--; cargarOfertas(); } });
+  document.getElementById("ofertas-siguiente-pagina")?.addEventListener("click", () => { paginaOfertas++; cargarOfertas(); });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    cargarEstudiantesDisponibles();
     cargarOfertas();
-
-
-    // === 3. GESTIÓN DE ENVÍO DE FORMULARIOS A SUPABASE ===
-
-    // Formulario de Empresas: "Publicar Oferta"
-    document.getElementById('empresa-oferta-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const oferta = {
-            nombre_empresa: formData.get('empresa-nombre'),
-            contacto_empresa: formData.get('empresa-email'),
-            familia_profesional: formData.get('empresa-familia-profesional'),
-            conocimientos_requeridos: formData.get('empresa-requisitos-alumnos'),
-            localidad: formData.get('empresa-comarca'),
-            numero_alumnos: parseInt(formData.get('empresa-num-alumnos')),
-            detalles_adicionales: formData.get('empresa-descripcion-formacion')
-        };
-
-        const { error } = await supabase.from('ofertas_practicas').insert([oferta]);
-        if (error) {
-            alert('Hubo un error al enviar tu oferta.');
-            console.error(error);
-        } else {
-            alert('✅ ¡Oferta publicada con éxito!');
-            form.reset();
-            cargarOfertas(); // Recargar la tabla de ofertas para mostrar la nueva
-        }
-    });
-
-    // Formulario de Centros: "Publicar Estudiantes"
-    document.getElementById('centro-estudiantes-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const estudiante = {
-            localidad_centro: formData.get('localidad-centro'),
-            familia_profesional: formData.get('centro-familia-profesional'),
-            numero_estudiantes: parseInt(formData.get('centro-num-estudiantes')),
-            fecha_disponibilidad: formData.get('centro-fecha-disponibilidad') || null,
-            contacto_centro: formData.get('centro-contacto')
-        };
-
-        const { error } = await supabase.from('estudiantes_disponibles').insert([estudiante]);
-        if (error) {
-            alert('Hubo un error al publicar los estudiantes.');
-            console.error(error);
-        } else {
-            alert('✅ ¡Estudiantes publicados con éxito!');
-            form.reset();
-        }
-    });
-
-    // Formulario de Empresas: "Suscribirse a Novedades"
-    document.getElementById('empresa-suscripcion-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const email = form.querySelector('#empresa-suscripcion-email').value;
-        const familiasSeleccionadas = form.querySelectorAll('input[name="familia"]:checked');
-
-        if (familiasSeleccionadas.length === 0) {
-            alert('Por favor, selecciona al menos una familia profesional.');
-            return;
-        }
-
-        const suscripciones = Array.from(familiasSeleccionadas).map(checkbox => ({
-            email: email,
-            familia_profesional: checkbox.value
-        }));
-
-        const { error } = await supabase.from('suscripciones').insert(suscripciones);
-        if (error) {
-            if (error.code === '23505') {
-                alert('⚠️ Ya estás suscrito a una o más de las familias seleccionadas.');
-            } else {
-                alert('Hubo un error al procesar tu suscripción.');
-                console.error(error);
-            }
-        } else {
-            alert('✅ ¡Te has suscrito con éxito!');
-            form.reset();
-        }
-    });
-
-    // Formulario "Canal de Dudas"
-    document.getElementById('dudas-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const duda = {
-            autor_nombre: formData.get('dudas-nombre'),
-            autor_email: formData.get('dudas-email'),
-            categoria: formData.get('dudas-tipo-usuario'),
-            titulo: formData.get('dudas-asunto'),
-            pregunta: formData.get('dudas-mensaje'),
-            estado: 'abierta'
-        };
-
-        const { error } = await supabase.from('dudas').insert([duda]);
-        if (error) {
-            alert('Hubo un error al enviar tu mensaje.');
-            console.error(error);
-        } else {
-            alert('✅ ¡Mensaje enviado con éxito! Muchas gracias.');
-            form.reset();
-        }
-    });
-
-});
- 
-    </script>
+  });
+</script>
 </body>
 </html>
