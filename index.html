@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DualExt - Plataforma de Prácticas FP</title>
+    <title>DualExt - Plataforma de Estancias formativas en Empresas u organismos equiparados (FEOE) </title>
     <style>
         * {
             margin: 0;
@@ -545,7 +545,11 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-container">
-                <a href="#" class="logo" onclick="showSection('inicio', this)">DualExt</a>
+                <a href="#" class="logo" onclick="showSection('inicio', this)">
+  <img src="logofp.png" alt="Logo FP" style="height: 40px; vertical-align: middle; margin-right: 8px;">
+  DualExt
+</a>
+
                 <ul class="nav-menu" id="nav-menu">
                     <li><a href="#" onclick="showSection('inicio', this)">Inicio</a></li>
                     <li class="dropdown">
@@ -580,7 +584,7 @@
             <section id="inicio" class="section active">
                 <div class="hero">
                     <h1>Bienvenido a DualExt</h1>
-                    <p>Facilitamos el intercambio de información entre empresas que ofrecen prácticas de FP (FEOE) y centros educativos con estudiantes disponibles.</p>
+                    <p>Facilitamos el contacto entre empresas que necesitan alumnos en formación en sus empresas (FEOE) y centros educativos con alumnos formados con los perfiles demandados.</p>
                     <div class="cta-buttons">
                         <a href="#" class="btn btn-primary" onclick="showSection('empresas-publicar-oferta')">🏢 Soy una Empresa</a>
                         <a href="#" class="btn btn-secondary" onclick="showSection('centros-publicar-estudiantes')">🎓 Soy un Centro Educativo</a>
@@ -598,14 +602,14 @@
                     </div>
                     <div class="card">
                         <h3>🎯 Para Centros Educativos</h3>
-                        <p>Acceda a ofertas de prácticas y publique la disponibilidad de sus estudiantes.</p>
+                        <p>Acceda a ofertas de estancias formativas y publique la disponibilidad de sus estudiantes.</p>
                     </div>
                 </div>
             </section>
 
             <section id="empresas" class="section">
                 <h2>Empresas</h2>
-                 <p class="section-description">Herramientas y recursos para empresas que buscan estudiantes de FP para prácticas.</p>
+                 <p class="section-description">Herramientas y recursos para empresas que buscan estudiantes de FP para estancias formativas.</p>
                  <div class="cards-grid">
                     <div class="card">
                         <h3>📝 Publicar Oferta</h3>
@@ -627,7 +631,7 @@
 
             <section id="empresas-publicar-oferta" class="section">
                 <h2>Empresas: Publicar Oferta</h2>
-                <p class="section-description">Rellene este formulario para que su oferta de prácticas (FEOE) llegue a los centros educativos.</p>
+                <p class="section-description">Rellene este formulario para que su oferta de estancias formativas (FEOE) llegue a los centros educativos.</p>
                 <div class="form-container">
                     <form id="empresa-oferta-form">
                         <div class="form-group">
@@ -864,16 +868,16 @@
 
             <section id="centros" class="section">
                  <h2>Centros Educativos</h2>
-                 <p class="section-description">Herramientas y recursos para centros educativos que buscan prácticas para sus estudiantes.</p>
+                 <p class="section-description">Herramientas y recursos para centros educativos que buscan estancias formativas para sus estudiantes.</p>
                  <div class="cards-grid">
                     <div class="card">
                         <h3>🎓 Publicar Estudiantes Disponibles</h3>
-                        <p>Informe a las empresas sobre los estudiantes de su centro que están listos para prácticas.</p>
+                        <p>Informe a las empresas sobre los estudiantes de su centro que están listos para las estancias formativas.</p>
                         <a href="#" class="btn btn-primary" onclick="showSection('centros-publicar-estudiantes')" style="margin-top: 1rem;">Ir a Publicar Estudiantes</a>
                     </div>
                     <div class="card">
                         <h3>📄 Ver Ofertas Actuales</h3>
-                        <p>Consulte las ofertas de prácticas publicadas por las empresas para sus alumnos.</p>
+                        <p>Consulte las ofertas de estancias formativas publicadas por las empresas para sus alumnos.</p>
                         <a href="#" class="btn btn-secondary" onclick="showSection('centros-ver-ofertas')" style="margin-top: 1rem;">Ir a Ver Ofertas</a>
                     </div>
                 </div>
@@ -881,7 +885,7 @@
             
            <section id="centros-publicar-estudiantes" class="section">
                 <h2>Centros: Publicar Estudiantes Disponibles</h2>
-                <p class="section-description">Rellene este formulario para registrar los grupos de estudiantes disponibles para prácticas.</p>
+                <p class="section-description">Rellene este formulario para registrar los grupos de estudiantes disponibles para estancias formativas.</p>
                  <div class="form-container">
                     <form id="centro-estudiantes-form">
                         <div class="form-group">
@@ -1040,8 +1044,8 @@
             </section>
 
             <section id="centros-ver-ofertas" class="section">
-    <h2>Centros: Ver Ofertas de Prácticas Actuales</h2>
-    <p class="section-description">Explore las ofertas de prácticas publicadas por las empresas.</p>
+    <h2>Centros: Ver Ofertas de Estancias Formativas Actuales</h2>
+    <p class="section-description">Explore las ofertas de estancias formativas publicadas por las empresas.</p>
 
     <!-- Filtros -->
     <div class="form-container" style="margin-bottom: 2rem;">
@@ -1095,10 +1099,10 @@
                      <div class="card" style="background: rgba(77, 171, 247, 0.08);">
                         <h3 style="color: #74c0fc;">🏢 Para Empresas:</h3>
                         <ol style="list-style-position: inside; padding-left: 10px;">
-                            <li style="margin-bottom: 0.8rem;"><strong>Rellene el formulario de oferta:</strong> Detalle qué perfiles necesita y las condiciones de las prácticas.</li>
-                            <li style="margin-bottom: 0.8rem;"><strong>La oferta se comparte:</strong> Su necesidad se envía a todos los centros educativos registrados y se publica en la web.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Rellene el formulario de oferta:</strong> Detalle qué perfiles necesita y las condiciones de las estancias formativas.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>La oferta se comparte:</strong> Su necesidad se envía a los centros educativos con alumnos de ese perfil y se publica en la web.</li>
                             <li style="margin-bottom: 0.8rem;"><strong>Consulte estudiantes disponibles:</strong> Explore los perfiles de alumnos que los centros han publicado.</li>
-                            <li style="margin-bottom: 0.8rem;"><strong>Contacte directamente:</strong> Si un perfil le interesa, contacte con el centro educativo de referencia.</li>
+                            <li style="margin-bottom: 0.8rem;"><strong>Contacte directamente:</strong> Si un perfil le interesa, se le pondrá en contacto con el centro educativo de referencia.</li>
                             <li style="margin-bottom: 0.8rem;"><strong>Suscríbase:</strong> Reciba avisos cuando haya nuevos estudiantes disponibles en las familias profesionales de su interés.</li>
                         </ol>
                     </div>
@@ -1141,8 +1145,8 @@
                          <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 4px solid #4dabf7;">
                             <div style="background: #4dabf7; color: white; min-width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">4</div>
                             <div>
-                                <h4>Gestión de Prácticas</h4>
-                                <p style="font-size:0.9rem; opacity:0.8;">La coordinación y formalización de las prácticas se realiza directamente entre la empresa y el centro educativo.</p>
+                                <h4>Gestión de Estancias Formativas</h4>
+                                <p style="font-size:0.9rem; opacity:0.8;">La coordinación y formalización de las estancias formativas se realiza directamente entre la empresa y el centro educativo.</p>
                             </div>
                         </div>
                     </div>
@@ -1192,11 +1196,13 @@
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 DualExt - Conectando Centros Educativos y Empresas.</p>
-            <p>Una iniciativa para facilitar la Formación Profesional Dual en Extremadura.</p>
-        </div>
-    </footer>
+  <div class="container">
+      <img src="piepagina.png" alt="Logo Europa" style="height: 50px; margin-bottom: 1rem;">
+      <p>&copy; 2025 DualExt - Conectando Centros Educativos y Empresas.</p>
+      <p>Una iniciativa para facilitar la Formación Profesional Dual en Extremadura.</p>
+  </div>
+</footer>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
